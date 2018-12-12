@@ -44,7 +44,60 @@ loadScript("<?php echo $Config['WebsitePath']; ?>/static/editor/ueditor.config.j
 				<div id="TagsList" class="btn">
 				</div>
 			</p>
-			<p><div class="text-center"><input type="button" value="<?php echo $Lang['Submit']; ?>(Ctrl+Enter)" name="submit" class="textbtn" onclick="JavaScript:CreateNewTopic();" id="PublishButton" /></div><div class="c"></div></p>
+            <?php if($Config['CAPTCHAmethod']== 'geetest' && $Config['GeetestID']!= 'null' && $Config['GeetestKey']!= 'null'){ ?>
+            <p class="text-center">
+                <div id="embed-captcha"></div>
+                <p id="wait" class="show">正在加载验证码......</p>
+                <p id="notice" class="hide">请先完成验证</p>
+
+                <script type="text/javascript">
+                    var handlerEmbed = function (captchaObj) {
+                        $("#PublishButton").click(function (e) {
+                            var validate = captchaObj.getValidate();
+                            if (!validate) {
+                                $("#notice")[0].className = "show";
+                                setTimeout(function () {
+                                    $("#notice")[0].className = "hide";
+                                }, 2000);
+                                e.preventDefault();
+                            }else{
+                                CreateNewTopic();
+                            }
+                        });
+                        // 将验证码加到id为captcha的元素里，同时会有三个input的值：geetest_challenge, geetest_validate, geetest_seccode
+                        captchaObj.appendTo("#embed-captcha");
+                        captchaObj.onReady(function () {
+                            $("#wait")[0].className = "hide";
+                        });
+                        captchaObj.onError(function () {
+                            alert("验证码出错啦！请刷新重试");
+                        });
+                        // 更多接口参考：http://www.geetest.com/install/sections/idx-client-sdk.html
+                    };
+                    $.ajax({
+                        // 获取id，challenge，success（是否启用failback）
+                        url: "/geetest?t=" + (new Date()).getTime(), // 加随机数防止缓存
+                        type: "get",
+                        dataType: "json",
+                        success: function (data) {
+                            console.log(data);
+                            // 使用initGeetest接口
+                            // 参数1：配置参数
+                            // 参数2：回调，回调的第一个参数验证码对象，之后可以使用它做appendTo之类的事件
+                            initGeetest({
+                                gt: data.gt,
+                                challenge: data.challenge,
+                                new_captcha: data.new_captcha,
+                                product: "embed", // 产品形式，包括：float，embed，popup。注意只对PC版验证码有效
+                                offline: !data.success // 表示用户后台检测极验服务器是否宕机，一般不需要关注
+                                // 更多配置参数请参见：http://www.geetest.com/install/sections/idx-client-sdk.html#config
+                            }, handlerEmbed);
+                        }
+                    });
+                </script>
+                <script src="<?php echo $Config['WebsitePath']; ?>/static/js/gt.js"></script>
+            <?php } ?>
+			<p><div class="text-center"><input type="button" value="<?php echo $Lang['Submit']; ?>(Ctrl+Enter)" name="submit" class="textbtn" id="PublishButton"/></div><div class="c"></div></p>
 			</form>
 	</div>
 </div>

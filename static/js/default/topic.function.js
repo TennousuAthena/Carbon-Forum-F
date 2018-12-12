@@ -96,50 +96,57 @@ function InitEditor() {
 	UE.delEditor('editor');
 	window.UEDITOR_CONFIG['textarea'] = 'Content';
 	window.UEDITOR_CONFIG['elementPathEnabled'] = false;
-	window.UEDITOR_CONFIG['toolbars'] = [
-		[
-			'fullscreen',
-			'source',
-			'|',
-			'undo',
-			'redo',
-			'|',
-			'bold',
-			'italic',
-			'underline',
-			'strikethrough', //删除线
-			'forecolor', //字体颜色
-			'backcolor', //背景色
-			'paragraph',
-			'fontsize',
-			'fontfamily'
-		],
-		[
-			'insertcode',
-			'link',
-			'blockquote',
-			'insertorderedlist',
-			'insertunorderedlist',
-			'|',
-			'emotion',
-			'simpleupload',
-			'insertimage',
-			'scrawl',
-			'insertvideo',
-			//'music',
-			'attachment',
-			'map', //Baidu地图
-			'gmap', //Google地图
-			'|',
-			'inserttable',
-			'insertrow', //前插入行
-			'insertcol', //前插入列
-			'|',
-			'searchreplace', //查询替换
-			'template', //模板
-			'autotypeset'
-		]
-	];
+    window.UEDITOR_CONFIG['toolbars'] = [
+        [
+            'fullscreen',
+            'source',
+            '|',
+            'undo',
+            'redo',
+            '|',
+            'bold',
+            'italic',
+            'underline',
+            'strikethrough', //删除线
+            'forecolor', //字体颜色
+            'backcolor', //背景色
+            'paragraph',
+            'fontsize',
+            'fontfamily',
+            '|',
+            'justifyleft',
+            'justifycenter',
+            'justifyright',
+            'justifyjustify',
+        ],
+        [
+            'insertcode',
+            'link',
+            'blockquote',
+            'insertorderedlist',
+            'insertunorderedlist',
+            '|',
+            'emotion',
+            'simpleupload',
+            'insertimage',
+            //'scrawl',
+            //'insertvideo',
+            //'music',
+            'attachment',
+            //'map', //Baidu地图
+            //'gmap', //Google地图
+            '|',
+            'inserttable',
+            'insertrow', //前插入行
+            'insertcol', //前插入列
+            '|',
+            'searchreplace', //查询替换
+            'background',
+            //'template', //模板
+            'removeformat',
+            'autotypeset'
+        ]
+    ];
 	UE.getEditor('editor', {
 		onready: function () {
 			if (window.localStorage) {
@@ -361,6 +368,9 @@ function ReplyToTopic() {
 			data: {
 				FormHash: document.reply.FormHash.value,
 				TopicID: document.reply.TopicID.value,
+                geetest_challenge: $(" input[ name='geetest_challenge' ] ").val(),
+                geetest_validate: $(" input[ name='geetest_validate' ] ").val(),
+                geetest_seccode: $(" input[ name='geetest_seccode' ] ").val(),
 				Content: UE.getEditor('editor').getContent()
 			},
 			type: 'post',

@@ -1,5 +1,6 @@
 <?php
 require(LanguagePath . 'new.php');
+require (LibraryPath . 'Geetestlib.class.php');
 Auth(1, 0, true);
 
 $ErrorCodeList = require(LibraryPath . 'code/new.error.code.php');
@@ -30,6 +31,31 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			$ErrorCode = $ErrorCodeList['Posting_Too_Often'];
 			break;
 		}
+
+		//Geetest
+        if($Config['CAPTCHAmethod']== 'geetest' && $Config['GeetestID']!= 'null' && $Config['GeetestKey']!= 'null'){
+            session_start();
+            $GtSdk = new GeetestLib($Config['GeetestID'], $Config['GeetestKey']);
+            $data = array(
+                "user_id" => GetCookie('UserID'), # 网站用户id
+                "client_type" => GetCookie('View'), #web:电脑上的浏览器；h5:手机上的浏览器，包括移动应用内完全内置的web_view；native：通过原生SDK植入APP应用的方式
+                "ip_address" => CurIP() # 请在此处传输用户请求验证时所携带的IP
+            );
+            if ($_SESSION['gtserver'] == 1) {   //服务器正常
+                $result = $GtSdk->success_validate($_POST['geetest_challenge'], $_POST['geetest_validate'], $_POST['geetest_seccode'], $data);
+                if (!$result) {
+                    $Error     = "CAPTCHA验证失败，请重试";
+                    $ErrorCode = $ErrorCodeList['CAPTCHA_Verify'];
+                    break;
+                }
+            } else {
+                if (!$GtSdk->fail_validate($_POST['geetest_challenge'],$_POST['geetest_validate'],$_POST['geetest_seccode'])) {
+                    $Error     = "CAPTCHA验证失败，请重试";
+                    $ErrorCode = $ErrorCodeList['CAPTCHA_Verify'];
+                    break;
+                }
+            }
+        }
 
 		if (!$Title) {
 			$Error     = $Lang['Title_Empty'];

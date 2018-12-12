@@ -38,7 +38,7 @@ function InitNewTopicEditor() {
 			'justifyleft',
 			'justifycenter',
 			'justifyright',
-			'justifyjustify'
+			'justifyjustify',
 		],
 		[
 			'insertcode',
@@ -50,19 +50,20 @@ function InitNewTopicEditor() {
 			'emotion',
 			'simpleupload',
 			'insertimage',
-			'scrawl',
-			'insertvideo',
+			//'scrawl',
+			//'insertvideo',
 			//'music',
 			'attachment',
-			'map', //Baidu地图
-			'gmap', //Google地图
+			//'map', //Baidu地图
+			//'gmap', //Google地图
 			'|',
 			'inserttable',
 			'insertrow', //前插入行
 			'insertcol', //前插入列
 			'|',
 			'searchreplace', //查询替换
-			'template', //模板
+            'background',
+			//'template', //模板
 			'removeformat',
 			'autotypeset'
 		]
@@ -174,7 +175,6 @@ function CtrlAndEnter(Event, IsPreventDefault) {
  }
  });
  */
-
 //提交前的检查
 function CreateNewTopic() {
 	if (!document.NewForm.Title.value.length) {
@@ -201,7 +201,10 @@ function CreateNewTopic() {
 			data: {
 				FormHash: document.NewForm.FormHash.value,
 				Title: document.NewForm.Title.value,
-				Content: UE.getEditor('editor').getContent(),
+                geetest_challenge: $(" input[ name='geetest_challenge' ] ").val(),
+                geetest_validate: $(" input[ name='geetest_validate' ] ").val(),
+                geetest_seccode: $(" input[ name='geetest_seccode' ] ").val(),
+                Content: UE.getEditor('editor').getContent(),
 				Tag: $("input[name='Tag[]']").map(function () {
 					return $(this).val();
 				}).get()

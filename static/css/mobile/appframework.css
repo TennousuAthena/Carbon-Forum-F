@@ -1,3 +1,6 @@
+.hide{
+	display: none;
+}
 #af_actionsheet {
 	position: absolute;
 	left: 0px;

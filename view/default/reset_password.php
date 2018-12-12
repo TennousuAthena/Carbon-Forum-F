@@ -33,7 +33,7 @@ loadScript("<?php echo $Config['WebsitePath']; ?>/static/js/default/account.func
 					<tr>
 						<td width="180" align="right"><?php echo $Lang['Verification_Code']; ?></td>
 						<td width="auto" align="left">
-							<label><input type="text" name="VerifyCode" class="w100" onfocus="document.getElementById('Reset_Password_Verification_Code_Img').src='<?php echo $Config['WebsitePath']; ?>/seccode.php';document.getElementById('Reset_Password_Verification_Code_Img').style.display='inline';" value="" placeholder="<?php echo $Lang['Verification_Code']; ?>" /></label> 
+							<label><input type="text" name="VerifyCode" autocomplete="off" class="w100" onfocus="document.getElementById('Reset_Password_Verification_Code_Img').src='<?php echo $Config['WebsitePath']; ?>/seccode.php';document.getElementById('Reset_Password_Verification_Code_Img').style.display='inline';" value="" placeholder="<?php echo $Lang['Verification_Code']; ?>" /></label>
 							<img src="" id="Reset_Password_Verification_Code_Img" style="cursor: pointer;display:none;" onclick="this.src+=''" align="middle" />
 						</td>
 					</tr>

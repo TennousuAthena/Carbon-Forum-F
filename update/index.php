@@ -390,9 +390,9 @@ if (!$Message) {
 		<!-- footer start -->
 		<div class="Copyright">
 			<p>
-			Powered By <a href="https://www.94cb.com" target="_blank">Carbon Forum <?php
+			Powered By <a href="https://github.com/qcminecraft/Carbon-Forum" target="_blank">Carbon Forum <?php
 echo $Version;
-?></a> © 2006-2016
+?></a> © 2006-<?php echo date("Y"); ?>
 			</p>
 		</div>
 		<!-- footer end -->

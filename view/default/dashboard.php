@@ -321,12 +321,43 @@ function GenerateSelect($Options, $Name)
 							<input type="password" class="w600" name="SMTPPassword" value="<?php echo $Config['SMTPPassword']; ?>" />
 						</td>
 					</tr>
+                    <tr>
+                        <td width="200" align="right"><?php echo $Lang['SMTP_Encr']; ?></td>
+                        <td width="auto" align="left">
+                            <?php echo GenerateSelect(array(
+                                'SSL' => 'ssl',
+                                'TLS' => 'tls'
+                            ), 'SMTPEncr'); ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="200" align="right"><?php echo '人机验证方式'; ?><br>(默认使用本地图片验证码)</td>
+                        <td width="auto" align="left">
+                            <?php echo GenerateSelect(array(
+                                '图片验证码' => 'captcha_img',
+                                'Geetest' => 'geetest',
+                            ), 'CAPTCHAmethod'); ?>
+                        </td>
+                    </tr>
+                    <?php if($Config['CAPTCHAmethod'] == 'geetest'){ ?>
+                    <tr>
+                        <td width="200" align="right"><?php echo 'Geetest ID' ?><br>(Geetest ID)</td>
+                        <td width="auto" align="left">
+                            <input type="text" class="w600" name="GeetestID" value="<?php echo $Config['GeetestID']; ?>" />
+                        </td>
+                    </tr>
+                        <tr>
+                            <td width="200" align="right"><?php echo 'Geetest KEY' ?><br>(Geetest KEY)</td>
+                            <td width="auto" align="left">
+                                <input type="password" class="w600" name="GeetestKey" value="<?php echo $Config['GeetestKey']; ?>" />
+                            </td>
+                        </tr>
+                    <?php } ?>
 					<tr>
 						<td width="200" align="right"></td>
 						<td width="auto" align="left">
 							<input type="submit" value="<?php echo $Lang['Save']; ?>" name="submit" class="textbtn"/>
 						</td>
-					</tr>
 					</tbody>
 				</table>
 			</form>

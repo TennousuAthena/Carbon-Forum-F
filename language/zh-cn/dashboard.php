@@ -56,6 +56,8 @@ $Lang = array_merge($Lang, array(
 	'SMTP_Username' => '邮箱地址',
 	'SMTP_Password' => '邮箱密码',
 
+	'SMTP_Encr' => 'SMTP加密方式',
+
 	'Upload_Parameters' => '上传参数',
 	'Text_Filter_Parameter' => '文本过滤参数',
 

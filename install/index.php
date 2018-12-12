@@ -21,6 +21,10 @@ if (is_file('install.lock')) {
 if (is_writable(dirname(dirname(__FILE__))) === false) {
 	die("根目录不可写，无法写入配置文件。  The root directory can not be written. This causes the configuration file to not be generated. ");
 }
+//检查当前目录是否可写
+if(!touch('text.log')){
+    die("当前目录不可写，请检查权限。 This directory can not be written. Please check the permission.");
+}
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	$fp = fopen(__DIR__ . '/database.sql', "r") or die("SQL文件无法打开。  The SQL File could not be opened.");
@@ -60,7 +64,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	}
 	$DB->query("INSERT INTO `" . PREFIX . "config` VALUES ('WebsitePath', '" . $WebsitePath . "')");
 	$DB->query("INSERT INTO `" . PREFIX . "config` VALUES ('LoadJqueryUrl', '" . $WebsitePath . "/static/js/jquery.js')");
-	$DB->query("UPDATE `" . PREFIX . "config` SET `ConfigValue`='" . date('Y-m-d') . "' WHERE `ConfigName`='DaysDate'");
+    $DB->query("INSERT INTO `" . PREFIX . "config` VALUES ('SMTPEncr', 'ssl')");
+
+    $DB->query("INSERT INTO `" . PREFIX . "config` VALUES ('CAPTCHAmethod', 'captcha_img')");
+    $DB->query("INSERT INTO `" . PREFIX . "config` VALUES ('GeetestID', 'null')");
+    $DB->query("INSERT INTO `" . PREFIX . "config` VALUES ('GeetestKey', 'null')");
+    $DB->query("UPDATE `" . PREFIX . "config` SET `ConfigValue`='" . date('Y-m-d') . "' WHERE `ConfigName`='DaysDate'");
 	$DB->query("UPDATE `" . PREFIX . "config` SET `ConfigValue`='" . $Version . "' WHERE `ConfigName`='Version'");
 	$DB->CloseConnection();
 	fclose($fp) or die("Can’t close file");
@@ -161,7 +170,7 @@ function GetNextSQL()
 
 ?>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN""http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-cmn-Hans" lang="zh-cmn-Hans">
 <head>
 	<meta charset="UTF-8"/>
@@ -321,7 +330,7 @@ function GetNextSQL()
 	<!-- footer start -->
 	<div class="Copyright">
 		<p>
-			Powered By <a href="https://www.94cb.com" target="_blank">Carbon Forum</a> © 2006-2016
+			Powered By <a href="https://github.com/qcminecraft/Carbon-Forum" target="_blank">Carbon Forum</a> © 2006-<?php echo date("Y"); ?>
 		</p>
 	</div>
 	<!-- footer end -->

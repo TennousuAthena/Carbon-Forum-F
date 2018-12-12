@@ -62,14 +62,11 @@ function Pagination($PageUrl, $CurrentPage, $TotalPage)
 
 $LayoutPageTitle = ($CurUserID && $CurUserInfo['NewNotification'] ? str_replace('{{NewMessage}}', $CurUserInfo['NewNotification'], $Lang['New_Message']) : '') . $PageTitle . ($UrlPath == 'home' ? '' : ' - ' . $Config['SiteName']);
 
-header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
-header("Cache-Control: post-check=0, pre-check=0", false);
-header("Pragma: no-cache");
+header("Cache-Control: must-revalidate, max-age=36000");
 ob_start();
 if(!$IsAjax){
-?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo $Lang['Language']; ?>"
+?><!DOCTYPE html>
+<html xml:lang="<?php echo $Lang['Language']; ?>"
 	  lang="<?php echo $Lang['Language']; ?>">
 <head>
 	<meta name="renderer" content="webkit"/>
@@ -126,6 +123,9 @@ if(!$IsAjax){
 			src="<?php echo $Config['WebsitePath']; ?>/static/js/default/global.js?version=<?php echo CARBON_FORUM_VERSION; ?>"></script>
 	<script type="text/javascript">
 		<?php if ($CurUserID) {
+		    echo 'var G_uid = ' . $CurUserID . ';
+		'. 'var G_uip = \'' . CurIP() .'\';
+		';
 			echo 'setTimeout(function() {GetNotification();}, 1);';
 		}
 		?>
@@ -243,7 +243,7 @@ if(!$IsAjax){
 	<!-- footer start -->
 	<div class="copyright">
 		<p>
-			<?php echo $Config['SiteName']; ?> Powered By © 2006-2016 <a href="http://www.94cb.com" target="_blank">Carbon
+			<?php echo $Config['SiteName']; ?> Powered By © 2006-<?php echo date("Y"); ?> <a href="https://github.com/qcminecraft/Carbon-Forum/" target="_blank">Carbon
 				Forum</a> V<?php echo CARBON_FORUM_VERSION; ?>
 			<a href="<?php echo $Config['WebsitePath']; ?>/statistics"><?php echo $Lang['Statistics']; ?></a>
 			<br/>

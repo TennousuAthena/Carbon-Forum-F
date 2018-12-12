@@ -38,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 					$MailObject->SMTPAuth   = ($Config['SMTPAuth'] === 'true' ? true : false); // $Config['SMTPAuth']           Enable SMTP authentication
 					$MailObject->Username   = $Config['SMTPUsername']; // SMTP username
 					$MailObject->Password   = $Config['SMTPPassword']; // SMTP password
-					$MailObject->SMTPSecure = 'tls'; // Enable TLS encryption, `ssl` also accepted
+					$MailObject->SMTPSecure = $Config['SMTPEncr'] ? $Config['SMTPEncr'] : 'ssl'; // Enable TLS encryption, `ssl` also accepted
 					$MailObject->Port       = intval($Config['SMTPPort']); // TCP port to connect to
 					
 					$MailObject->From     = $Config['SMTPUsername'];
