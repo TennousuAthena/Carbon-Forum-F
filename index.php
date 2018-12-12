@@ -82,6 +82,7 @@ $Routes['GET']['/users/following(/page/(?<page>[0-9]*))?']                      
 $Routes['GET']['/upload_controller']                                                       = 'upload';
 $Routes['POST']['/upload_controller']                                                      = 'upload';
 $Routes['GET']['/redirect-(?<view>desktop|mobile)']                                        = 'redirect';
+$Routes['GET']['/geetest']                                                                 = 'geetest';
 
 //这里是Routes End
 $UrlPath = 'home';
@@ -101,12 +102,12 @@ foreach ($Routes[$HTTPMethod] as $URL => $Controller) {
 		break;
 	}
 }
-
 if ($NotFound === true) {
 	require(__DIR__ . '/404.php');
 	exit();
 }
 
+/*
 if ($Config['MobileDomainName'] && $_SERVER['HTTP_HOST'] != $Config['MobileDomainName'] && $CurView == 'mobile' && !$IsApp && $UrlPath != 'view') {
 	//如果是手机，则跳转到移动版
 	header("HTTP/1.1 302 Moved Temporarily");
@@ -114,5 +115,6 @@ if ($Config['MobileDomainName'] && $_SERVER['HTTP_HOST'] != $Config['MobileDomai
 	header('Location: ' . $CurProtocol . $Config['MobileDomainName'] . $RequestURI);
 	exit();
 }
+*/
 
 require(__DIR__ . '/controller/' . $UrlPath . '.php');
