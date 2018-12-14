@@ -45,6 +45,9 @@ function CreateNewTopic() {
 			data: {
 				FormHash: document.NewForm.FormHash.value,
 				Title: document.NewForm.Title.value,
+                geetest_challenge: $(" input[ name='geetest_challenge' ] ").val(),
+                geetest_validate: $(" input[ name='geetest_validate' ] ").val(),
+                geetest_seccode: $(" input[ name='geetest_seccode' ] ").val(),
 				Content: Content,
 				Tag: $("input[name='Tag[]']").map(function() {
 					return $(this).val();
