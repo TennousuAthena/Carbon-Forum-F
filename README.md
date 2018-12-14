@@ -38,10 +38,11 @@
 * 讨论标签为 Quora/StackOverflow 风格 
 * API支持
 * High FE&BE performance. 
-* Full asynchronous design, improve the loading speed. 
+* 全异步加载，提高页面加载速度
 * Excellent search engine optimization (mobile adaptation Sitemap support) .
 * Perfect draft saving mechanism. 
 * The modern Notification Center (currently supported and @ replies).
+* Geetest 验证码
 
 ## 贡献
 
