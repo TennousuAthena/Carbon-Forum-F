@@ -101,6 +101,8 @@ if($CurUserID){
 				</p>
 				<div id="ReplyViewHTML">
 				</div>
+                <form id="gt_form"></form>
+                <script src="<?php echo $Config['WebsitePath']; ?>/static/js/gt.js"></script>
 				<p><a class="button green block" href="#main" data-transition="up-reveal:dismiss" id="ReplyViewSubmitButton"></a></p>
 				<p><a class="button block" href="#main" data-transition="up-reveal:dismiss" id="ReplyViewCancelButton"></a></p>
 			</div>

@@ -1,5 +1,5 @@
 /*
- * Carbon-Forum-F
+ * Carbon-Forum
  * https://github.com/lincanbin/Carbon-Forum
  *
  * Copyright 2006-2017 Canbin Lin (lincanbin@hotmail.com)
@@ -389,6 +389,37 @@ function Reply(UserName, PostFloor, PostID, FormHash, TopicID) {
 	$("#ReplyViewCancelButton").text(Lang['Cancel']);
 	$("#ReplyViewSubmitButton").text(Lang['Reply']);
 	$("#ReplyViewSubmitButton").unbind('click');
+
+    var handlerEmbed = function (captchaObj) {
+        captchaObj.onReady(function () {
+            captchaObj.verify();
+            captchaObj.bindForm("#gt_form");
+        });
+        captchaObj.onError(function () {
+            CarbonAlert("验证码发生错误！");
+        });
+        // 更多接口参考：http://www.geetest.com/install/sections/idx-client-sdk.html
+    };
+    $.ajax({
+        // 获取id，challenge，success（是否启用failback）
+        url: "/geetest?t=" + (new Date()).getTime(), // 加随机数防止缓存
+        type: "get",
+        dataType: "json",
+        success: function (data) {
+            console.log(data);
+            // 使用initGeetest接口
+            // 参数1：配置参数
+            // 参数2：回调，回调的第一个参数验证码对象，之后可以使用它做appendTo之类的事件
+            initGeetest({
+                gt: data.gt,
+                challenge: data.challenge,
+                new_captcha: data.new_captcha,
+                product: "bind", // 产品形式，包括：float，embed，popup。注意只对PC版验证码有效
+                offline: !data.success // 表示用户后台检测极验服务器是否宕机，一般不需要关注
+                // 更多配置参数请参见：http://www.geetest.com/install/sections/idx-client-sdk.html#config
+            }, handlerEmbed);
+        }
+    });
 	$("#ReplyViewSubmitButton").click(function() {
 		if ($("Content" + TopicID).val()) {
 			CarbonAlert(Lang['Content_Empty']);
@@ -397,36 +428,44 @@ function Reply(UserName, PostFloor, PostID, FormHash, TopicID) {
 			var MarkdownConverter = new showdown.Converter(),
 			PreContent =  (PostFloor==0) ? "" : Lang['Reply_To'] + "[#" + PostFloor + "](/t/"+TopicID+"#Post"+PostID+") @" + UserName + " :\n\n",
 			Content = MarkdownConverter.makeHtml(PreContent + $("#Content" + TopicID).val());
-			$.ajax({
-				url: WebsitePath + "/reply",
-				data: {
-					FormHash: FormHash,
-					TopicID: TopicID,
-					Content: Content
-				},
-				type: "post",
-				dataType: "json",
-				success: function(Result) {
-					//TODO：删除Toast
-					if (Result.Status === 1) {
-						console.log(Result);
-						$.afui.goBack();
-						$.afui.loadContent(
-							WebsitePath + "/t/" + Result.TopicID + (Result.Page > 1 ? "-" + Result.Page: ""), 
-							false, 
-							false, 
-							"slide",
-							document.getElementById('mainview')
-						);
-						//$("#ReplyViewSubmitButton").attr("href", WebsitePath + "/t/" + Result.TopicID + (Result.Page > 1 ? "-" + Result.Page: ""));
-					} else {
-						CarbonAlert(Result.ErrorMessage);
-					}
-				},
-				error: function() {
-					CarbonAlert(Lang['Submit_Failure']);
-				}
-			});
+			var geetest_num = document.getElementsByName("geetest_challenge").length -1;
+			if(document.getElementsByName("geetest_challenge")[geetest_num].value == ""){
+                CarbonAlert("请完成验证！");
+			}else {
+                $.ajax({
+                    url: WebsitePath + "/reply",
+                    data: {
+                        FormHash: FormHash,
+                        TopicID: TopicID,
+                        Content: Content,
+                        geetest_challenge: document.getElementsByName("geetest_challenge")[geetest_num].value,
+                        geetest_validate: document.getElementsByName("geetest_validate")[geetest_num].value,
+                        geetest_seccode: document.getElementsByName("geetest_seccode")[geetest_num].value,
+                    },
+                    type: "post",
+                    dataType: "json",
+                    success: function (Result) {
+                        //TODO：删除Toast
+                        if (Result.Status === 1) {
+                            console.log(Result);
+                            $.afui.goBack();
+                            $.afui.loadContent(
+                                WebsitePath + "/t/" + Result.TopicID + (Result.Page > 1 ? "-" + Result.Page : ""),
+                                false,
+                                false,
+                                "slide",
+                                document.getElementById('mainview')
+                            );
+                            //$("#ReplyViewSubmitButton").attr("href", WebsitePath + "/t/" + Result.TopicID + (Result.Page > 1 ? "-" + Result.Page: ""));
+                        } else {
+                            CarbonAlert(Result.ErrorMessage);
+                        }
+                    },
+                    error: function () {
+                        CarbonAlert(Lang['Submit_Failure']);
+                    }
+                });
+            }
 		}
 	});
 }
