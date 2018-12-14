@@ -1,4 +1,6 @@
 # 碳·谈    [![Build Status](https://travis-ci.org/qcminecraft/Carbon-Forum-F.svg?branch=master)](https://travis-ci.org/qcminecraft/Carbon-Forum-F)
+[![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/Carbon-Forum-F/Lobby) [![PHP Version](https://img.shields.io/badge/php-5.4%2B-green.svg)](https://github.com/qcminecraft/Carbon-Forum-F)
+
 **警告：当前版本并不稳定，请勿用于生产环境，请及时备份数据！！**
 
 * 一个高效美观的PHP开源论坛
