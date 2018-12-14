@@ -15,7 +15,7 @@
 * PHP >=5.4.0
 * [__PDO_MYSQL__](http://php.net/manual/en/ref.pdo-mysql.php)
 * MySQL >=5.0
-* [__mod_rewrite__](http://httpd.apache.org/docs/2.2/mod/mod_rewrite.html) Apache module / [__ngx_http_rewrite_module__](https://github.com/qcminecraft/Carbon-Forum/blob/master/nginx.conf) / [__ISAPI_Rewrite__](http://www.helicontech.com/isapi_rewrite/) IIS module / IIS7+. 
+* [__mod_rewrite__](http://httpd.apache.org/docs/2.2/mod/mod_rewrite.html) Apache module / [__ngx_http_rewrite_module__](https://github.com/qcminecraft/Carbon-Forum-F/blob/master/nginx.conf) / [__ISAPI_Rewrite__](http://www.helicontech.com/isapi_rewrite/) IIS module / IIS7+. 
 * 如果使用Apache作为http服务器，则需要 [__mod_headers__](http://httpd.apache.org/docs/2.2/mod/mod_headers.html)
 
 ## 安装

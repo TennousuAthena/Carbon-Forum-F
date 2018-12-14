@@ -330,7 +330,7 @@ function GetNextSQL()
 	<!-- footer start -->
 	<div class="Copyright">
 		<p>
-			Powered By <a href="https://github.com/qcminecraft/Carbon-Forum" target="_blank">Carbon Forum</a> © 2006-<?php echo date("Y"); ?>
+			Powered By <a href="https://github.com/qcminecraft/Carbon-Forum-F" target="_blank">Carbon Forum</a> © 2006-<?php echo date("Y"); ?>
 		</p>
 	</div>
 	<!-- footer end -->

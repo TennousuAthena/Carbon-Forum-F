@@ -243,7 +243,7 @@ if(!$IsAjax){
 	<!-- footer start -->
 	<div class="copyright">
 		<p>
-			<?php echo $Config['SiteName']; ?> Powered By © 2006-<?php echo date("Y"); ?> <a href="https://github.com/qcminecraft/Carbon-Forum/" target="_blank">Carbon
+			<?php echo $Config['SiteName']; ?> Powered By © 2006-<?php echo date("Y"); ?> <a href="https://github.com/qcminecraft/Carbon-Forum-F/" target="_blank">Carbon
 				Forum</a> V<?php echo CARBON_FORUM_VERSION; ?>
 			<a href="<?php echo $Config['WebsitePath']; ?>/statistics"><?php echo $Lang['Statistics']; ?></a>
 			<br/>
