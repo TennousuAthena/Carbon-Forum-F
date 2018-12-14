@@ -17,9 +17,9 @@ services:
 
 addons:
   hosts:
-    - local.94cb.com
-    - local-m.94cb.com
-    - local-api.94cb.com
+    - local.carbon-forum-f.com
+    - local-m.carbon-forum-f.com
+    - local-api.carbon-forum-f.com
 
 before_script:
   - chmod 777 -R ./

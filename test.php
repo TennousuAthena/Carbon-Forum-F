@@ -9,9 +9,9 @@ if (PHP_OS === "WINNT") {
 }
 
 define('TestHTTPPort', '8099');
-define('TestMainDomainName', 'local.94cb.com:' . TestHTTPPort);
-define('TestMobileDomainName', 'local-m.94cb.com:' . TestHTTPPort);
-define('TestAppDomainName', 'local-api.94cb.com:' . TestHTTPPort);
+define('TestMainDomainName', 'local.carbon-forum-f.com:' . TestHTTPPort);
+define('TestMobileDomainName', 'local-m.carbon-forum-f.com:' . TestHTTPPort);
+define('TestAppDomainName', 'local-api.carbon-forum-f.com:' . TestHTTPPort);
 $Passed = 0;
 $Failed = 0;
 
